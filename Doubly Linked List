@@ -1,0 +1,109 @@
+class Doubly_linked
+{
+private:
+    struct Node
+    {
+        int date;
+        Node* next;
+        Node* pre;
+        Node()
+        {
+            next = NULL;
+            pre = NULL;
+        }
+    };
+    Node* Head = NULL;
+public:
+    void append(int v)
+    {
+        Node* newNode = new Node;
+        newNode->date = v;
+        if (Head == NULL)
+        {
+            Head = newNode;
+        }
+        else
+        {
+            Node* temp = Head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            newNode->pre = temp;
+            temp->next = newNode;
+        }
+    };
+    void remove(int v)
+    {
+        Node* Temp = Head;
+        if (Head == NULL)
+        {
+            return;
+        }
+        else if (Temp->date == v)
+        {
+            Head = Head->next;
+            if(Head != NULL)
+                Head->pre = NULL;
+            delete Temp;
+        }
+        else
+        {
+            while (Temp != NULL && Temp->date != v)
+            {
+                Temp = Temp->next;
+            }
+            if (Temp != NULL)
+            {
+                Temp->pre->next = Temp->next;
+                if (Temp->next != NULL)
+                    Temp->next->pre = Temp->pre;
+                delete Temp;
+            }
+        }
+    }
+    void remove_at_pos(int pos)
+    {
+        if (Head == NULL)
+        {
+            return;
+        }
+        Node* Temp = Head;
+        for (int i = 1; i < pos; i++)
+        {
+            if (Temp == NULL)
+            {
+                return;
+            }
+            Temp = Temp->next;
+        }
+        if(Temp != NULL && pos > 0)
+            remove(Temp->date);
+    }
+    void Display()
+    {
+        if (Head == NULL)
+        {
+            return;
+        }
+        else
+        {
+            Node* temp = Head;
+            while (temp != NULL)
+            {
+                cout << temp->date << " ";
+                temp = temp->next;
+            }
+        }
+    }
+};
+
+int main()
+{
+    Doubly_linked d;
+    d.append(6);
+    d.append(4);
+    d.append(62);
+    d.remove_at_pos(0);
+    d.Display();
+}
