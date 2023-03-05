@@ -1,0 +1,146 @@
+class BST
+{
+private:
+	struct Node
+	{
+		int data;
+		Node* right;
+		Node* left;
+		Node(int val)
+		{
+			data = val;
+			right = left = NULL;
+		}
+	};
+	Node* root = NULL;
+	void Helper_in_order(Node* temp)
+	{
+		if (root == NULL)
+		{
+			return;
+		}
+		else
+		{
+			Helper_in_order(temp->left);
+			cout << temp->data << endl;
+			Helper_in_order(temp->right);
+		}
+	}
+	void Helper_Pre_Order(Node* temp)
+	{
+		if (temp == NULL)
+			return;
+		else
+		{
+			cout << temp->data << " ";
+			Helper_in_order(temp->left);
+			Helper_in_order(temp->right);
+		}
+	}
+	void Helper_Post_Order(Node* temp)
+	{
+		if (temp == NULL)
+			return;
+		else
+		{
+			Helper_Post_Order(temp->left);
+			Helper_Post_Order(temp->right);
+			cout << temp->data << endl;
+		}
+	}
+public:
+	void add(int val)
+	{
+		Node* newNode = new Node(val);
+		if (root == NULL)
+		{
+			root = newNode;
+		}
+		else
+		{
+			Node* temp = root , *p = root;
+			while (temp != NULL)
+			{
+				p = temp;
+				if (val < temp->data)
+				{
+					temp = temp->left;
+				}
+				else
+				{
+					temp = temp->right;
+				}
+			}
+			if (val <= p->data)
+			{
+				p->left = newNode;
+			}
+			else
+			{
+				p->right = newNode;
+			}
+		}
+
+	}
+	int Min()
+	{
+		if (root != NULL)
+		{
+			Node* temp = root;
+			while (temp->left != NULL)
+			{
+				temp = temp->left;
+			}
+			cout << temp->data << endl;
+		}
+	}
+	int Max()
+	{
+		if (root != NULL)
+		{
+			Node* temp = root;
+			while (temp->right != NULL)
+			{
+				temp = temp->right;
+			}
+			return temp->data;
+		}
+	}
+	void Level_Order()
+	{
+		if (root != NULL)
+		{
+			queue<Node*> qu;
+			qu.push(root);
+			while (!qu.empty())
+			{
+				Node* curr = qu.front();
+				if (curr->left != NULL)
+					qu.push(curr->left);
+				if(curr->right != NULL)
+					qu.push(curr->right);
+				cout << curr->data << endl;
+				qu.pop();
+			}
+		}
+	}
+	void inOrder()
+	{
+
+		if (root != NULL)
+			Helper_in_order(root);
+		cout << endl;
+	}
+	void PreOrder()
+	{
+		if (root != NULL)
+			Helper_Pre_Order(root);
+		cout << endl;
+	}
+	void PostOrder()
+	{
+		if (root != NULL)
+			Helper_Post_Order(root);
+		cout << endl;
+	}
+};
