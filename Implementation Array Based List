@@ -1,0 +1,114 @@
+class Array_list
+{
+private:
+	int len, size, * arr;
+public:
+	Array_list(int s = 10)
+	{
+		if (s < 10)
+			size = 10;
+		else
+		{
+			size = s;
+		}
+		arr = new int[size];
+		len = 0;
+	}
+	bool isEmpty()
+	{
+		return len == 0;
+	}
+	bool isFull()
+	{
+		return len == size;
+	}
+	void add(int pos, int value)
+	{
+		if (isFull())
+		{
+			cout << "Your Array is Full .." << endl;
+		}
+		else if (pos < 0 || pos > size)
+			cout << "Your postion is false.." << endl;
+		else
+		{
+			//  5
+			/// 2 3 13 1 0 
+			for (int i = len; i > pos; i--)
+			{
+				arr[i] = arr[i - 1];
+			}
+			arr[pos] = value;
+			len++;
+		}
+	}
+	void addEnd(int value)
+	{
+		if (isFull())
+		{
+			cout << "Your Array is Full .." << endl;
+		}
+		else
+		{
+			arr[len] = value;
+			len++;
+		}
+	}
+	void Print()
+	{
+		for (int i = 0; i < len; i++)
+			cout << arr[i] << " ";
+		cout << endl;
+	}
+	int Search(int value)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			if (arr[i] == value)
+				return i;
+		}
+		return -1;
+	}
+	void remove_Pos(int pos)
+	{
+		if (isEmpty())
+		{
+			cout << "Your arry is Empty ." << endl;
+		}
+		else if (pos > len || pos < 0)
+			cout << "Error .." << endl;
+		else
+		{
+			for (int i = pos; i < len; i++)
+			{
+				arr[i] = arr[i + 1];
+				len--;
+			}
+		}
+	}
+	int Size()
+	{
+		return size;
+	}
+	int length()
+	{
+		return len;
+	}
+	void addNoDouble(int value)
+	{
+		if (Search(value) == -1)
+		{
+			addEnd(value);
+		}
+		else
+			cout << "i fount this value : " << value << endl;
+	}
+	void clear()
+	{
+		len = 0;
+	}
+	~Array_list()
+	{
+		delete[] arr;
+	}
+};
